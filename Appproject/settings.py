@@ -145,6 +145,7 @@ ALLOWED_HOSTS = [
 ]
 
 
+
 # --- Google Cloud Storage Settings ---
 # GS_BUCKET_NAME = 'zometric_media'
 # GS_CREDENTIALS = os.path.join(BASE_DIR.parent, 'gcp_keys', 'Cloud.json') # <--- UPDATE THIS PATH AND FILENAME
