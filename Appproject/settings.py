@@ -137,12 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # django_backend/Appproject/settings.py
 
-ALLOWED_HOSTS = [
-    'file-uploading-django.onrender.com',
-    'localhost',
-    '127.0.0.1',
-    '[::1]',
-]
+ALLOWED_HOSTS = ['file-uploading-django.onrender.com']
 
 
 
