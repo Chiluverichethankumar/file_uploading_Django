@@ -110,7 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # CORS settings for development
 CORS_ALLOW_ALL_ORIGINS = True 
-
+# For allowing credentials, if needed
+CORS_ALLOW_CREDENTIALS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -137,9 +138,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # django_backend/Appproject/settings.py
 
 CORS_ALLOWED_ORIGINS = [
-    "https://your-react-native-app-domain.com",
+    "https://your-react-native-app-domain.com:",
     "http://localhost:19006",  # if testing with Expo
-    "http://127.0.0.1:8000",   # optional for local dev
+    "http://0.0.0.0:8000",   # optional for local dev
 ]
 
 
