@@ -1,6 +1,9 @@
 Django~=5.2.1
+asgiref~=3.8.1 
+sqlparse~=0.5.3 
+# zdata~=2025.2   <- commented or deleted
 djangorestframework~=3.16.0
 django-cors-headers~=4.7.0
 django-storages~=1.14.6
-gunicorn~=23.0.0
+gunicorn
 packaging~=25.0
