@@ -147,8 +147,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # django_backend/Appproject/settings.py
 
 # ALLOWED_HOSTS = ['file-uploading-django.onrender.com']
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['*', 'file-uploading-django.onrender.com']
 
 
 # --- Google Cloud Storage Settings ---
