@@ -1,9 +1,19 @@
 from django.contrib import admin
+from .models import UploadGroup, UploadFile
 
-# Register your models here.
+class UploadFileInline(admin.TabularInline):
+    model = UploadFile
+    extra = 0
+    readonly_fields = ['file']
 
-from django.contrib import admin
-from .models import UploadedFile # Import your UploadedFile model
+@admin.register(UploadGroup)
+class UploadGroupAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'note', 'created_at']
+    search_fields = ['note', 'user__username']
+    list_filter = ['user', 'created_at']
+    inlines = [UploadFileInline]
 
-# Register your model with the admin site
-admin.site.register(UploadedFile)
+@admin.register(UploadFile)
+class UploadFileAdmin(admin.ModelAdmin):
+    list_display = ['id', 'group', 'file']
+    search_fields = ['file']
