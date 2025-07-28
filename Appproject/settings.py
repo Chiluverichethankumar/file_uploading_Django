@@ -160,29 +160,25 @@
 
 
 
-
 import os
 from dotenv import load_dotenv
 from pathlib import Path
 
-# Load environment variables from .env file (for development)
+# Load environment variables
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECRET KEY: keep it secret in production (Set this in Render Environment Variables)
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-dev')
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG mode (Set to False in production)
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Allowed hosts
+# ALLOWED HOSTS
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'file-uploading-django.onrender.com,localhost,127.0.0.1').split(',')
 
-
-# Application definition
-
+# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -191,21 +187,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Third-party apps
+    # 3rd party
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'storages',
 
-    # Your apps
+    # Local app
     'CRU',
 ]
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Add CORS middleware early
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -213,7 +208,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Appproject.urls'  # Change to your project name
+ROOT_URLCONF = 'Appproject.urls'
 
 TEMPLATES = [
     {
@@ -231,10 +226,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Appproject.wsgi.application'  # Change to your project name
+WSGI_APPLICATION = 'Appproject.wsgi.application'
 
-# Database
-# Configure this based on your deployment (SQLite for dev, PostgreSQL for prod, etc.)
+# Database (SQLite for dev, use PostgreSQL in Render prod)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -242,8 +236,26 @@ DATABASES = {
     }
 }
 
-# Static files (CSS, JavaScript, Images)
+# Static files
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Default primary key field type
+# Media files (optional, for file uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# REST framework config (if needed)
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
+# CORS settings (allow frontend if hosted separately)
+CORS_ALLOW_ALL_ORIGINS = True  # For development; restrict in production
+
+# Default primary key field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
