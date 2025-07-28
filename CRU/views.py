@@ -63,3 +63,14 @@ class UploadListView(generics.ListAPIView):
         if user.is_superuser:
             return UploadGroup.objects.all().order_by('-created_at')
         return UploadGroup.objects.filter(user=user).order_by('-created_at')
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            request.user.auth_token.delete()
+            return Response({"message": "Successfully logged out."}, status=status.HTTP_200_OK)
+        except:
+            return Response({"error": "Logout failed."}, status=status.HTTP_400_BAD_REQUEST)
