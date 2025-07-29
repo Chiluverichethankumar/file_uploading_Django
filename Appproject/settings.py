@@ -183,6 +183,13 @@ ALLOWED_HOSTS = os.environ.get(
 ).split(',')
 
 
+# ✅ CSRF TRUSTED ORIGINS
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-9de8.up.railway.app',
+    'https://file-uploading-django.onrender.com'
+]
+
+
 # Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
