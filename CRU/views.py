@@ -1,14 +1,15 @@
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status, generics
+from rest_framework import status, generics,permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .models import UploadGroup, UploadFile
+from .models import UploadGroup, UploadGroup1, UploadFile, UploadFile1
 from .serializers import (
     LoginSerializer, UserSerializer,
-    UploadGroupSerializer, UploadGroupListSerializer
+    UploadGroupSerializer, UploadGroupListSerializer,
+    UploadGroup1Serializer
 )
 
 class LoginView(APIView):
@@ -52,6 +53,26 @@ class FileUploadView(APIView):
             UploadFile.objects.create(group=group, file=f)
 
         serializer = UploadGroupSerializer(group)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class FileUploadView1(APIView):
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request):
+        note = request.data.get('note', '').strip()
+        files = request.FILES.getlist('file')
+
+        if not note:
+            return Response({'error': 'Note is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = request.user if request.user.is_authenticated else None
+        group = UploadGroup1.objects.create(user=user, note=note)
+
+        for f in files:
+            UploadFile1.objects.create(group=group, file=f)
+
+        serializer = UploadGroup1Serializer(group)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class UploadListView(generics.ListAPIView):

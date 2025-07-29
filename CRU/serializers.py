@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import UploadGroup, UploadFile
+from .models import UploadGroup, UploadFile,UploadGroup1, UploadFile1
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -31,3 +31,20 @@ class UploadGroupListSerializer(serializers.ModelSerializer):
     class Meta:
         model = UploadGroup
         fields = ['id', 'note', 'username', 'files', 'created_at']
+
+
+class UploadFile1Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = UploadFile1
+        fields = ['file']
+
+class UploadGroup1Serializer(serializers.ModelSerializer):
+    files = UploadFile1Serializer(many=True, read_only=True)
+    username = serializers.SerializerMethodField()
+
+    def get_username(self, obj):
+        return obj.user.username if obj.user else "Anonymous"
+
+    class Meta:
+        model = UploadGroup1
+        fields = ['id', 'note', 'files', 'created_at', 'username']
