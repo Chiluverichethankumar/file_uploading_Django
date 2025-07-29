@@ -176,7 +176,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-fallback-key-for-dev'
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 # ALLOWED HOSTS
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'file-uploading-django.onrender.com','localhost,127.0.0.1','web-production-9de8.up.railway.app').split(',')
+
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1,ile-uploading-django.onrender.com,web-production-9de8.up.railway.app'
+).split(',')
+
 
 # Installed apps
 INSTALLED_APPS = [
